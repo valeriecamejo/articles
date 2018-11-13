@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
   delete(id) {
     if(confirm("¿Seguro que desea eliminar el artículo?")) {
       this.articleService.delete(id).subscribe( (data) => {
-        alert("Eliminado con éxito");
         this.getArticles();
       }, (error) => {
         console.log(error);

@@ -14,21 +14,24 @@ export class FormComponent implements OnInit {
     title: null,
     description: null
   };
+  title: string = "Crear";
   id: any;
   editing: boolean = false;
   articles: Article[];
   constructor(private articlesService: ArticlesService, private activatedRoute: ActivatedRoute, private router:Router) { 
     this.id = this.activatedRoute.snapshot.params['id'];
     if(this.id) {
+      this.title = "Editar";
       this.editing = true
       this.articlesService.get().subscribe( (data: Article[]) => {
         this.articles = data;
-        this.article = this.articles.find( (m) => { return m.id == this.id} )
+        this.article = this.articles.find( (m) => { return m.id == this.id} );
       }, (error) => {
         console.log(error);
       })
     } else {
-      this.editing = false
+      this.editing = false;
+      this.title = "Crear";
     }
   }
 
@@ -38,17 +41,16 @@ export class FormComponent implements OnInit {
   saveMovie() {
     if(this.editing) {
       this.articlesService.put(this.article).subscribe( (data) => {
-        alert("Artículo actualizado exitosamente");
-        this.router.navigate(['home']);
+        this.router.navigate([' home']);
       }, (error) => {
-        alert("Ocurrió un error");
+        console.log("Ocurrió un error");
       });
     } else {
       this.articlesService.save(this.article).subscribe( (data) => {
         alert("Artículo guardado exitosamente");
         this.router.navigate(['home']);
       }, (error) => {
-        alert("Ocurrió un error");
+        console.log("Ocurrió un error");
       });
     }
   }
